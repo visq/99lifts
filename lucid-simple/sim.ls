@@ -83,8 +83,11 @@ let node main () =
   let key = None -> keyboard () in
   let btns = interface key in
   (* read mouse *)
-  let cx,_ = get_cursor() in
-  let load_pos = at_level 3 in
+  let load_req = get_load_request() in
+  let load_pos = pos where
+    rec pos = (match load_req with None -> last pos | Some p -> p end)
+    and last pos = at_level 3
+  in
   (* simulate *)
   let rec (sensors,lift_pos) = environment (false -> pre motor_on) (Down -> pre motor_dir) (at_level 2) load_pos
   and                          (motor_on, motor_dir, obs) = lift btns sensors in

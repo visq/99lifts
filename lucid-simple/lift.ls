@@ -1,26 +1,12 @@
 (*
-Copyright (C) 2011, Benedikt Huber (benedikt.huber@gmail.com)
-
 Adapted from the java Lift benchmark in the JOP project (www.jopdesign.com)
 Copyright (C) 2001-2008, Martin Schoeberl (martin@jopdesign.com)
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+              2011, Benedikt Huber (benedikt.huber@gmail.com)
 *)
 
 (* Differences to the Java version:
    - A simpler approximation is used for checkLevel, which does not require loops.
-     We could use a different clock domain to implement loops, but this is not done yet
+     We could use ocaml for the check_level loop, but this has not been implemented yet
    - For simplicity reasons, the low-level conversion from signals to bitmasks and the corresponding voter
      have been left out
 *)

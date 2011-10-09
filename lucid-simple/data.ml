@@ -24,10 +24,6 @@ let keyboard () =
     Some(key)
   else None;;
 
-(* mouse input *)
-let get_cursor () =
-  let cx,cy = mouse_pos() in cx,cy
-
 let button_down () = button_down ()
 
 let draw_line col x0 x1 y0 y1 =
@@ -38,11 +34,12 @@ let draw_line col x0 x1 y0 y1 =
 let y_pos_scale = 5;;
 let x_base = 100;;
 let y_base = 30;;
+let y_end  = y_base + one_level * y_pos_scale * 16;;
 let draw_lift_bg () =
   (* static background at x = x_base*)
   (* draw the axis line *)
   draw_line foreground (x_base - 5) (x_base + 5) y_base y_base;
-  draw_line foreground x_base x_base y_base (y_base + one_level * y_pos_scale * 16);
+  draw_line foreground x_base x_base y_base y_end;
   (* at each level, draw a circle *)
   for i=1 to 15 do draw_circle x_base (y_base + one_level * y_pos_scale * i) 5 done;
   ;;
@@ -61,6 +58,14 @@ let draw_lift_impl l ll =
   draw_lift_anim (background, background) ll;
   draw_lift_anim (red, blue) l;
   synchronize ();;
+
+(* mouse input *)
+let get_load_request() =
+  let cx,cy   = mouse_pos() in 
+  let pressed = button_down() in
+  if pressed & (cx > x_base - 50) & (cx < x_base + 50) & (cy >= y_base - 10) & (cy <= y_end + 10) 
+    then Some ((cy-y_base)/y_pos_scale)
+    else None;;
 
 (* initialization *)
 open_graph "";;

@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.6 2006/04/12 15:48:44 delaval Exp $
+# Makefile
 OBJ = data.cmo lift.cmo sim.cmo main.cmo 
 BIN = main
 
@@ -18,7 +18,7 @@ nodesim:
 	ocamlc -o $(NODE)_sim unix.cma -I +lablgtk2 lablgtk.cma $(M).ml $(NODE).ml $(NODE)_sim.ml 
 
 clean:
-	/bin/rm -f *~ *.cmi *.cmo *.cmx *.o *.lci *.dcc lift.ml *_demo.* *_sim.* \
+	/bin/rm -f *~ *.cmi *.cmo *.cmx *.o *.lci *.dcc sim.ml lift.ml main.ml *_demo.* *_sim.* \
 	           *demo_sim $(BIN)
 
 .SUFFIXES: .ls .ml .cmo .dcc .mli .cmi .lci
