@@ -54,8 +54,8 @@ type sensors =
 
 (* constants *)
 let ms_per_tick = 10
-let startup_ticks = 200 (* 500 *)  / ms_per_tick
-let stop_ticks = 200    (* 500 *)  / ms_per_tick
+let startup_ticks = 100 (* 500 *)  / ms_per_tick
+let stop_ticks =    100 (* 500 *)  / ms_per_tick
 let predicted_stop_ticks = 2
 let start_pos = 0
 
@@ -95,7 +95,7 @@ let node command btns sensors pos motor_busy = (cmd, reset_pos) where
       do cmd = Stop until (not motor_busy) then Idle
     |SensedEnd dir ->
       do match dir with
-            Down -> do emit reset_pos = start_pos done
+            Down -> do emit reset_pos = (start_pos + 2) done (* calibrated *)
            |Up   -> do done
          end
       until true then Busy

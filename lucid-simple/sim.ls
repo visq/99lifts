@@ -12,16 +12,12 @@ let node sample n =
   ok
 
 (* constants *)
-let sensor_width   = 1
-let end_pos        = one_level * 15 (* 864 *)
-let stop_ticks     = 40
+let sensor_width   = 2       (* calibrated *)
+let stop_ticks     = 8
 let ticks_per_imp  = 4       (* emit tick every 30 ms *)
-let ticks_per_imp_stop = 50  (* emit every 300 ms (0-1 before 400ms) *) 
 
-(* very simple environment simulation simulation 
-   TODO: decent motor simulation *)
-let node env motor_on dir initial_pos load_pos =
-  ((t,b,l,i),pos) where
+(* very simple environment simulation, unrealisitic motor *)
+let node env motor_on dir initial_pos load_pos = ((t,b,l,i),pos) where
   rec automaton
      Off ->
       do until motor_on then On
@@ -31,7 +27,7 @@ let node env motor_on dir initial_pos load_pos =
       until (not motor_on) then Stop
     |Stop ->
       let rec ticks = 0 -> pre ticks + 1 in
-      let clock stopclock = sample ticks_per_imp_stop in
+      let clock stopclock = true -> false in
       do  emit impulse = () when stopclock
       until (motor_on)                           then On
       until (not motor_on & ticks == stop_ticks) then Off
@@ -109,7 +105,12 @@ let node main () =
     |Go Up -> print_string ", UP"
     |Go Down -> print_string ", DOWN"
   end;
+  if btns.go_top  then print_string ",go top!" else ();
+  if btns.go_up   then print_string ",go up!" else ();
+  if btns.go_load then print_string ",go load!" else ();
+  if btns.go_down then print_string ",go down!" else ();
+  if btns.go_bot  then print_string ",go bottom!" else ();
   print_newline ();
   
   (* plot ouput *)
-  draw_lift (lift_pos,load_pos)
+  draw_lift (lift_pos,load_pos,default 0 level)

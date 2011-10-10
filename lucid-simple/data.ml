@@ -1,7 +1,9 @@
 open Graphics
 
 (* levels *)
-let one_level = 5 (* 58 *);;  (* simulation is more fun with fewer ticks per level *)
+let num_levels = 15 ;;
+let one_level = 5 (* 58 *);;                              (* simulation is more fun with fewer ticks per level *)
+let end_pos   = one_level * (num_levels - 1) (* 864 *);;  (* simulation is more fun with fewer ticks per level *)
 
 (* option type *)
 type 'a option = None | Some of 'a
@@ -34,29 +36,34 @@ let draw_line col x0 x1 y0 y1 =
 let y_pos_scale = 5;;
 let x_base = 100;;
 let y_base = 30;;
-let y_end  = y_base + one_level * y_pos_scale * 16;;
+let y_end  = y_base + one_level * y_pos_scale * 15;;
 let draw_lift_bg () =
   (* static background at x = x_base*)
   (* draw the axis line *)
-  draw_line foreground (x_base - 5) (x_base + 5) y_base y_base;
   draw_line foreground x_base x_base y_base y_end;
-  (* at each level, draw a circle *)
-  for i=1 to 15 do draw_circle x_base (y_base + one_level * y_pos_scale * i) 5 done;
+  (* at each level, draw a horizontal line *)
+  for i=1 to 15 do
+    let y_off = (y_base + one_level * y_pos_scale * (i-1)) in 
+    draw_line foreground (x_base - 5) (x_base + 5) y_off y_off
+  done;
   ;;
 
-let draw_lift_anim (color_lift,color_load) (lift_pos, load_pos) =
+let draw_lift_anim (color_lift, color_load, color_led) (lift_pos, load_pos, led_count) =
   (* lift *)
   set_color color_lift;
   draw_circle (x_base + 20) (y_base + y_pos_scale * lift_pos) 8;
   (* load *)
   set_color color_load;
   draw_circle (x_base + 10) (y_base + y_pos_scale * load_pos) 5;
+  (* leds *)
+  set_color color_led;
+  for i=1 to led_count do draw_circle (x_base - 15) (y_base + one_level * y_pos_scale * (i-1)) 3 done;
   ;;
-
-(* l is the current lift/load and ll is the previous one *)
-let draw_lift_impl l ll =
-  draw_lift_anim (background, background) ll;
-  draw_lift_anim (red, blue) l;
+  
+(* l is the current lift, load and led and ll is the previous one *)
+let draw_lift_impl l (old_lift, old_load, old_leds) =
+  draw_lift_anim (background, background, red) (old_lift, old_load, 15);
+  draw_lift_anim (red, blue, green) l;
   synchronize ();;
 
 (* mouse input *)
