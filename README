@@ -1,6 +1,6 @@
 99lifts
 =======
-The goal of this small project is to reimplement Martin Schoeberl's Lift Controller[1] 
+The goal of this small project is to reimplement Martin Schoeberl's Lift Controller[1]
 in a few radically different languages or platforms for hard real-time systems.
 
 All kind of contributions are of course most welcome !
@@ -8,22 +8,26 @@ All kind of contributions are of course most welcome !
 Status
 ------
 
-In addition to the original code, which is written for Embedded Java, I've implemented 
-a variant in Lucid Synchrone [2]. The Lucid variant includes a simulator, which is 
+In addition to the original code, which is written for Embedded Java, I've implemented
+a variant in Lucid Synchrone [2]. The Lucid variant includes a simulator, which is
 well suited to demonstrate how to system works.
 
+Second, the code was ported to C, and used in various research projects (such as the F-Shell Testcase generator [9]).
+
 Here is a list of other interesting targets, in decreasing order of my personal interest:
+
  - atom [3]
- - SystemJ [4]   (requires free-of-charge license)
- - Lustre v6 [5,6] (C backend requires free-of-charge license)
  - Ptolemy II variants [7]
- - Simulink+Stateflow+Embedded Coder [8] (commercial) 
+ - Simulink+Stateflow+Embedded Coder [8] (commercial)
+ - Lustre v6 [5,6] (C backend requires free-of-charge license)
+ - SystemJ [4]   (requires free-of-charge license)
 
 Implementations
 ---------------
 java-orig              ... The original implementation
 lucid-simple           ... An implementation in lucid synchrone. Does not use
                            multi-domain clocks. Includes simulator and visuals.
+c-port                 ... straighforward port of the original implementation to C
 
 References
 ----------
@@ -35,3 +39,4 @@ References
 [6] http://www-verimag.imag.fr/The-Lustre-Toolbox.html
 [7] http://ptolemy.berkeley.edu/ptolemyII/
 [8] http://www.mathworks.com/products/simulink/
+[9] http://forsyte.at/software/fshell/
