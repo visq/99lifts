@@ -18,7 +18,7 @@ int cntValid;
 int cnt;
 
 /**
- * Last stoped level (1..13) if position is absolute else 0.
+ * Last stopped level (1..LEVEL_POS_LENGTH-1) if position is absolute else 0.
  */
 int level;
 
@@ -67,8 +67,6 @@ int endCnt;
 
 void ctrl_init()
 {
-  int i;
-
   io_init();
   cntValid = FALSE;
   cnt = 0;
@@ -80,23 +78,22 @@ void ctrl_init()
   loadLevel = 0;
   loadPending = FALSE;
   loadSensor = FALSE;
-  i = 0;
-  levelPos[i++] = 0;
-  levelPos[i++]=58;
-  levelPos[i++]=115;
-  levelPos[i++]=173;
-  levelPos[i++]=230;
-  levelPos[i++]=288;
-  levelPos[i++]=346;
-  levelPos[i++]=403;
-  levelPos[i++]=461;
-  levelPos[i++]=518;
-  levelPos[i++]=576;
-  levelPos[i++]=634;
-  levelPos[i++]=691;
-  levelPos[i++]=749;
-  levelPos[i++]=806;
-  levelPos[i++]=864;
+  levelPos[0]=  0;
+  levelPos[1]= 58;
+  levelPos[2]=115;
+  levelPos[3]=173;
+  levelPos[4]=230;
+  levelPos[5]=288;
+  levelPos[6]=346;
+  levelPos[7]=403;
+  levelPos[8]=461;
+  levelPos[9]=518;
+  levelPos[10]=576;
+  levelPos[11]=634;
+  levelPos[12]=691;
+  levelPos[13]=749;
+  levelPos[14]=806;
+  levelPos[15]=864;
   one_level = levelPos[1];
 }
 
@@ -232,7 +229,7 @@ void wait_for_motor_start()
       newLevel = level-1;
     }
     --newLevel;	/* level is one based */
-    if (newLevel>=0 && newLevel<LEVEL_POS_LENGTH) {
+    if (newLevel >= 0 && newLevel < LEVEL_POS_LENGTH) {
       endCnt = levelPos[newLevel];
     }
   }

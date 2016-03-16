@@ -5,7 +5,7 @@
 #define TRUE  1
 #define BOOLEAN int
 
-#define LEVEL_POS_LENGTH 14
+#define LEVEL_POS_LENGTH 16
 
 #define GO_LOAD 8
 #define GO_TOP 6

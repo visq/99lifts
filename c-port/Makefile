@@ -2,6 +2,7 @@ all: run_lift test_lift
 
 SRCS=lift_io.c lift_control.c
 TEST_SRCS=$(SRCS) test_lift.data.c
+CFLAGS=-O1 -Wall -Wno-unknown-pragmas
 
 # executables
 run_lift: run_lift.c $(SRCS)

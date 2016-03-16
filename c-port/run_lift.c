@@ -14,7 +14,7 @@ void controller() {
 
 int main()
 {
-  int i;
+  int i = 0;
   ctrl_init();
   while(1) {
     /* zero input stimulus */
